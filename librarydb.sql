@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-12-19 22:39:03
+Date: 2018-12-20 19:31:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,17 +63,20 @@ CREATE TABLE `kindbook` (
   `author` varchar(10) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
   `content` varchar(255) DEFAULT NULL COMMENT '书的简介',
+  `catalog` varchar(255) DEFAULT NULL COMMENT '目录',
+  `publish` varchar(255) DEFAULT NULL COMMENT '出版社',
+  `topic` varchar(255) DEFAULT NULL COMMENT '学科主题',
   PRIMARY KEY (`callnumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of kindbook
 -- ----------------------------
-INSERT INTO `kindbook` VALUES ('001', 'java程序设计', '李刚', '1', null);
-INSERT INTO `kindbook` VALUES ('002', '数据库原理及应用教程', '陈志泊', '2', null);
-INSERT INTO `kindbook` VALUES ('003', '计算机网络', '吴功宜', '3', null);
-INSERT INTO `kindbook` VALUES ('004', '数据结构', '严蔚敏', '4', null);
-INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3', null);
+INSERT INTO `kindbook` VALUES ('001', 'java程序设计', '李刚', '1', null, null, null, null);
+INSERT INTO `kindbook` VALUES ('002', '数据库原理及应用教程', '陈志泊', '2', null, null, null, null);
+INSERT INTO `kindbook` VALUES ('003', '计算机网络', '吴功宜', '3', null, null, null, null);
+INSERT INTO `kindbook` VALUES ('004', '数据结构', '严蔚敏', '4', null, null, null, null);
+INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for specificbook
