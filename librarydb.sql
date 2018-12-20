@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-12-18 21:31:26
+Date: 2018-12-19 22:39:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,6 +24,7 @@ CREATE TABLE `borrow` (
   `userid` varchar(10) NOT NULL,
   `borrowdate` date DEFAULT NULL,
   `backdate` date DEFAULT NULL,
+  `status` varchar(10) DEFAULT '已借',
   PRIMARY KEY (`barcode`,`userid`),
   KEY `FK_borrow2` (`userid`),
   CONSTRAINT `FK_borrow` FOREIGN KEY (`barcode`) REFERENCES `specificbook` (`barcode`),
@@ -57,21 +58,22 @@ CREATE TABLE `collect` (
 -- ----------------------------
 DROP TABLE IF EXISTS `kindbook`;
 CREATE TABLE `kindbook` (
-  `callnumer` varchar(10) NOT NULL,
+  `callnumber` varchar(10) NOT NULL,
   `bookname` varchar(15) DEFAULT NULL,
   `author` varchar(10) DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
-  PRIMARY KEY (`callnumer`)
+  `content` varchar(255) DEFAULT NULL COMMENT '书的简介',
+  PRIMARY KEY (`callnumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of kindbook
 -- ----------------------------
-INSERT INTO `kindbook` VALUES ('001', 'java程序设计', '李刚', '1');
-INSERT INTO `kindbook` VALUES ('002', '数据库原理及应用教程', '陈志泊', '2');
-INSERT INTO `kindbook` VALUES ('003', '计算机网络', '吴功宜', '3');
-INSERT INTO `kindbook` VALUES ('004', '数据结构', '严蔚敏', '4');
-INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3');
+INSERT INTO `kindbook` VALUES ('001', 'java程序设计', '李刚', '1', null);
+INSERT INTO `kindbook` VALUES ('002', '数据库原理及应用教程', '陈志泊', '2', null);
+INSERT INTO `kindbook` VALUES ('003', '计算机网络', '吴功宜', '3', null);
+INSERT INTO `kindbook` VALUES ('004', '数据结构', '严蔚敏', '4', null);
+INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3', null);
 
 -- ----------------------------
 -- Table structure for specificbook
@@ -79,13 +81,13 @@ INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3');
 DROP TABLE IF EXISTS `specificbook`;
 CREATE TABLE `specificbook` (
   `barcode` varchar(10) NOT NULL,
-  `callnumer` varchar(10) NOT NULL,
+  `callnumber` varchar(10) NOT NULL,
   `buydate` date DEFAULT NULL,
   `place` varchar(20) DEFAULT NULL,
-  `state` char(2) DEFAULT NULL,
+  `state` char(2) DEFAULT '未借',
   PRIMARY KEY (`barcode`),
-  KEY `FK_包含` (`callnumer`),
-  CONSTRAINT `FK_包含` FOREIGN KEY (`callnumer`) REFERENCES `kindbook` (`callnumer`)
+  KEY `FK_包含` (`callnumber`),
+  CONSTRAINT `FK_包含` FOREIGN KEY (`callnumber`) REFERENCES `kindbook` (`callnumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -103,9 +105,9 @@ INSERT INTO `specificbook` VALUES ('C003', '003', '2018-12-12', '303-3', '未借
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `userid` varchar(10) NOT NULL,
+  `userid` varchar(10) NOT NULL DEFAULT '',
   `password` varchar(10) NOT NULL,
-  `maxborrow` int(11) DEFAULT NULL,
+  `maxborrow` int(11) DEFAULT '20',
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
