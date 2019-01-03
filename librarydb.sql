@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-12-20 20:50:57
+Date: 2019-01-03 20:04:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,10 +22,10 @@ DROP TABLE IF EXISTS `borrow`;
 CREATE TABLE `borrow` (
   `barcode` varchar(10) NOT NULL,
   `userid` varchar(10) NOT NULL,
-  `borrowdate` date DEFAULT NULL,
+  `borrowdate` date NOT NULL,
   `backdate` date DEFAULT NULL,
   `status` varchar(10) DEFAULT '已借',
-  PRIMARY KEY (`barcode`,`userid`),
+  PRIMARY KEY (`barcode`,`userid`,`borrowdate`),
   KEY `FK_borrow2` (`userid`),
   CONSTRAINT `FK_borrow` FOREIGN KEY (`barcode`) REFERENCES `specificbook` (`barcode`),
   CONSTRAINT `FK_borrow2` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
@@ -54,6 +54,25 @@ CREATE TABLE `collect` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `callnumber` varchar(10) NOT NULL,
+  `userid` varchar(10) NOT NULL,
+  `comment` varchar(255) DEFAULT NULL COMMENT '评论内容',
+  `time` datetime NOT NULL COMMENT ' 评论时间',
+  PRIMARY KEY (`callnumber`,`userid`,`time`),
+  KEY `FK_evaluate2` (`userid`),
+  CONSTRAINT `FK_evaluate` FOREIGN KEY (`callnumber`) REFERENCES `kindbook` (`callnumber`),
+  CONSTRAINT `FK_evaluate2` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for kindbook
 -- ----------------------------
 DROP TABLE IF EXISTS `kindbook`;
@@ -72,11 +91,12 @@ CREATE TABLE `kindbook` (
 -- ----------------------------
 -- Records of kindbook
 -- ----------------------------
-INSERT INTO `kindbook` VALUES ('001', 'java程序设计', '李刚', '1', null, null, null, null);
-INSERT INTO `kindbook` VALUES ('002', '数据库原理及应用教程', '陈志泊', '2', null, null, null, null);
-INSERT INTO `kindbook` VALUES ('003', '计算机网络', '吴功宜', '3', null, null, null, null);
-INSERT INTO `kindbook` VALUES ('004', '数据结构', '严蔚敏', '4', null, null, null, null);
-INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3', null, null, null, null);
+INSERT INTO `kindbook` VALUES ('001', 'java程序设计', '李刚', '1', '-', '-', '-', '-');
+INSERT INTO `kindbook` VALUES ('002', '数据库原理及应用教程', '陈志泊', '2', '-', '-', '-', '-');
+INSERT INTO `kindbook` VALUES ('003', '计算机网络', '吴功宜', '3', '-', '-', '-', '-');
+INSERT INTO `kindbook` VALUES ('004', '数据结构', '严蔚敏', '4', '-', '-', '-', '-');
+INSERT INTO `kindbook` VALUES ('005', '软件工程导论', '张海藩', '3', '-', '-', '-', '-');
+INSERT INTO `kindbook` VALUES ('006', '78', '79', '890', '-', '-', '-', '-');
 
 -- ----------------------------
 -- Table structure for specificbook
@@ -138,3 +158,5 @@ CREATE TABLE `userdetail` (
 -- ----------------------------
 -- Records of userdetail
 -- ----------------------------
+INSERT INTO `userdetail` VALUES ('001', '20', '0', null);
+INSERT INTO `userdetail` VALUES ('002', '20', '0', null);
