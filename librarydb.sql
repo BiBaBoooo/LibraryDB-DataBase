@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2018-12-20 19:31:09
+Date: 2018-12-20 20:50:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -110,7 +110,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userid` varchar(10) NOT NULL DEFAULT '',
   `password` varchar(10) NOT NULL,
-  `maxborrow` int(11) DEFAULT '20',
+  `email` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -121,3 +121,20 @@ INSERT INTO `user` VALUES ('001', '123', '20');
 INSERT INTO `user` VALUES ('002', '123', '20');
 INSERT INTO `user` VALUES ('003', '123', '20');
 INSERT INTO `user` VALUES ('admin', '123', null);
+
+-- ----------------------------
+-- Table structure for userdetail
+-- ----------------------------
+DROP TABLE IF EXISTS `userdetail`;
+CREATE TABLE `userdetail` (
+  `userid` varchar(10) NOT NULL,
+  `maxborrow` int(11) DEFAULT '20' COMMENT '最大借书量',
+  `borrowcount` int(10) DEFAULT '0' COMMENT '已借数量',
+  `name` varchar(40) DEFAULT NULL COMMENT '姓名',
+  PRIMARY KEY (`userid`),
+  CONSTRAINT `1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of userdetail
+-- ----------------------------
