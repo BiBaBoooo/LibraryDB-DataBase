@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-01-03 20:04:48
+Date: 2019-01-04 18:55:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,6 +33,20 @@ CREATE TABLE `borrow` (
 
 -- ----------------------------
 -- Records of borrow
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `cID` varchar(10) NOT NULL,
+  `cName` varchar(50) NOT NULL COMMENT '类别名',
+  PRIMARY KEY (`cID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of category
 -- ----------------------------
 
 -- ----------------------------
@@ -70,6 +84,25 @@ CREATE TABLE `comment` (
 
 -- ----------------------------
 -- Records of comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for kc
+-- ----------------------------
+DROP TABLE IF EXISTS `kc`;
+CREATE TABLE `kc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cID` varchar(10) NOT NULL COMMENT '类别编号',
+  `callnumber` varchar(10) NOT NULL COMMENT '索书号',
+  PRIMARY KEY (`id`),
+  KEY `FK_kc` (`cID`),
+  KEY `FK_kc2` (`callnumber`),
+  CONSTRAINT `FK_kc` FOREIGN KEY (`cID`) REFERENCES `category` (`cID`),
+  CONSTRAINT `FK_kc2` FOREIGN KEY (`callnumber`) REFERENCES `kindbook` (`callnumber`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of kc
 -- ----------------------------
 
 -- ----------------------------
